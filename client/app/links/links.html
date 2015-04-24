@@ -1,19 +1,25 @@
 <nav>
-  <ul>
-    <li><a href="/#/links">Go To Links!</a></li>
-    <li><a href="/#/shorten">Go To Shorten!</a></li>
-    <li ng-click="signout()">Sign Out</li>
+  <div class="navigation">
+    <li><a href="/#/links">Links</a></li>
+    <li><a href="/#/shorten">Shorten</a></li>
+    <li><a href="#" ng-click="signout()">Sign Out</a></li>
   </ul>
-</nav>
+</div>
 
 <div id='container'>
   <h1>All our Links!</h1>
   <label>Search: <input ng-model="searchText"></label>
-  <ul>
-    <li ng-repeat="link in data.links | filter : searchText | orderBy : '-visits' ">
+  <div class="links">
+    <div ng-repeat="link in data.links | filter : searchText | orderBy : '-visits' " class="link">
+    <img src="{{ link.image }}">
+    <div class="info">
+      <div class="visits">
+        <span class='count'>{{ link.visits }}</span>Visits
+      </div>
+
       <div class='title'>{{ link.title }}</div>
+      <div class='original'>{{ link.url }}</div>
       <a href="/api/links/{{ link.code }}" target="_blank">{{ link.base_url + "/" + link.code }} </a>
-      <div class='visits'>Visits: {{ link.visits }}</div>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>

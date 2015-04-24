@@ -1,6 +1,6 @@
 angular.module('shortly.shorten', [])
 
-.controller('ShortenController', function ($scope, $location, $http) {
+.controller('ShortenController', function ($scope, $location, Links, Auth) {
 
   $scope.link = {};
 
@@ -9,16 +9,21 @@ angular.module('shortly.shorten', [])
   $scope.addLink = function(){
     $scope.link.url = $scope.url;
     JSON.stringify($scope.link);
-    console.log('scope', $scope.link);
 
-    return $http({
-      method: 'POST',
-      url: '/api/links',
-      data: $scope.link
-    }).then(function (resp){
-      // $scope.data.links = resp.data;
-     console.log('resp data is:', resp.data);
-     $scope.success = true;
-    });
-  }
+    Links.addLink($scope.link)
+      .then(function(resp){
+        $scope.link = resp;
+        $scope.success = true;
+      })
+  };
+
+  $scope.signout = function () {
+    Auth.signout()
+      .then(function () {
+        console.log('user is signedout!');
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
 });

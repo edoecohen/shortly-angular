@@ -47,16 +47,19 @@ module.exports = {
         if (match) {
           res.send(match);
         } else {
-          return  util.getUrlTitle(url);
+          return util.getUrlTitle(url);
         }
       })
-      .then(function (title) {
-        if (title) {
+      .then(function (info) {
+        if (info.title) {
+
+          console.log('image!!!!', info.image);
           var newLink = {
             url: url,
             visits: 0,
             base_url: req.headers.origin,
-            title: title
+            title: info.title,
+            image: info.image
           };
           return createLink(newLink);
         }

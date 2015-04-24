@@ -10,10 +10,20 @@ module.exports = {
       if (err) {
         defer.reject(err);
       } else {
+        var info = {};
+
         var tag = /<title>(.*)<\/title>/;
         var match = html.match(tag);
-        var title = match ? match[1] : url;
-        defer.resolve(title);
+        info.title = match ? match[1] : url;
+
+        var imgTag = /<img[^>]+src="([^"]+)"/;
+        // var imgTag = /<img src\s*=\s*"([^"]+?)">/;
+        var newMatch = html.match(imgTag);
+        info.image = newMatch ? newMatch[1] : "assets/redirect_icon.png";
+
+        console.log('new image captured', info.image);
+
+        defer.resolve(info);
       }
     });
     return defer.promise;

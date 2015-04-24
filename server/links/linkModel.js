@@ -5,6 +5,7 @@ var LinkSchema = new mongoose.Schema({
  visits: Number,
  link: String,
  title: String,
+ image: String,
  code: String,
  base_url: String,
  url: String
